@@ -15,11 +15,12 @@ doorbell = 40
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(doorbell, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 status = GPIO.input(doorbell)
-file2mail = open("/tmp/file2mail.tmp", "w")
+
 
 while True:
       status = GPIO.input(doorbell)
       if status == 0:
+           file2mail = open("/tmp/file2mail.tmp", "w")
            logtime = time.strftime("%d-%m-%Y %H:%M")
            os.system("echo "+logtime+" >> /var/log/doorbell.log")
            file2mail.write("From: Doorbell@Home\nTo:YourEmail@Yourmailserver.com\nSubject:You got a visitor at the door!\n\n"+logtime+"\n")
